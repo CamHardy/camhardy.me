@@ -56,19 +56,73 @@ export default {
   },
   methods: {
       sketch(sk) {
-          sk.windowResized = () => {
-              sk.resizeCanvas(sk.windowWidth, sk.windowHeight - 75);
-              sk.background(200);
-          };
+          let bgColor = 245;
+          let triColors = [252, 251, 249, 248, 241, 240];
+          let col_num = 0;
+          // since we're using triangles there aren't really rows in the traditional sense
+          // this is the count of triangles stacked in a column
+          let row_num = 0;
+          let triSize = 22;
+          let triGap = 2;
 
           sk.setup = () => {
+              // set up canvas
               sk.createCanvas(sk.windowWidth, sk.windowHeight - 75);
-              sk.background(200);
+              sk.background(bgColor);
+              sk.frameRate(1);
+
+              // set up draw variables
+              col_num = sk.floor(sk.width / (triSize + triGap)) - 5;
+              row_num = sk.floor(sk.height / (triSize + triGap)) + 1;
+              drawBackground();
           };
 
           sk.draw = () => {
-              //
+              //TODO: create an array of colors (grey tones)
+              //TODO: create an array of triangles to cover the screen
+              //TODO: each draw call, random triangles will be marked for update
+              //TODO: triangles marked for update choose a random new color
+              //TODO: draw all triangles from array
           };
+
+          sk.windowResized = () => {
+              sk.resizeCanvas(sk.windowWidth, sk.windowHeight - 75);
+              sk.background(bgColor);
+              sk.frameRate(1);
+
+              // set up draw variables
+              col_num = sk.floor(sk.width / (triSize + triGap));
+              row_num = sk.floor(sk.height / (triSize + triGap)) + 1;
+              drawBackground();
+          };
+
+          function drawBackground() {
+              for (let i = -triSize/4; i < col_num; i++) {
+                  let rowInv = i % 2;
+                  for (let j = -triSize/4; j < row_num; j++) {
+                      let oi = i * (triSize + 2 * triGap);
+                      let oj = j * (triSize + triGap);
+                      drawTriangle(oi, oj, getColor());
+                      drawTriangle(oi + (triSize + triGap), oj + ((triSize + triGap) / 2), getColor(), true);
+                  }
+              }
+          }
+
+          // x, y: draw position
+          // color: draw color
+          // inv: inverted triangles 'point' to the left
+          function drawTriangle(x, y, color, inv = false) {
+              sk.noStroke();
+              sk.fill(color);
+              sk.triangle(  x, y,                                                   // p1
+                            inv ? x - triSize : x + triSize, y + (triSize / 2),     // p2
+                            x, y + triSize   );                                     // p3
+          }
+
+          // return random color from triColors[]
+          function getColor() {
+              return triColors[(Math.floor(Math.random() * triColors.length))];
+          }
       }
   }
 }

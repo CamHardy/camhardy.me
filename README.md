@@ -31,7 +31,7 @@ npm run lint
 - [x] Set up a skeleton Vue project
 - [x] Set up Buefy
 - [x] Find Bulma themes (Bulmaswatch)
-- [ ] Set up vue-p5
+- [x] Set up vue-p5
 
 ### Layout
 - [x] Fixed responsive navbar at the top
@@ -40,6 +40,7 @@ npm run lint
     - [x] Menu button to open/close dropdown on the far right only visisble if screen is too small to display page links
 - [ ] Footer?
 - [ ] Content transitions (mostly fades)
+    - [x] Page fades
 
 * ##### Home page
 - [x] Fill screen with large hero section
@@ -47,12 +48,14 @@ npm run lint
     - [x] Title/Tag line
     - [x] Text body
     - [x] Icon links to external sites (github, linkedin, twitter, instagram, codepen, etc.)
-    - [ ] Some kind of black and white background image/pattern
+    - [ ] Background
+        - [ ] Animated canvas
+        - [x] Use a black and white background image/pattern as a fallback
 
 * ##### Projects page
 - [ ] Grid of project tiles
     - [ ] Optional picture
     - [ ] Title
-    - [ ] Click on tile to 
+    - [ ] Click on tile to go to specific project page
 
 ### Content
