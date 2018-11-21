@@ -1,31 +1,53 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <nav class="navbar is-fixed-top" role="navigation">
+      <div class="navbar-brand">
+        <div class="navbar-item is-paddingless" v-on:click="showNav = false">
+          <router-link class="navbar-item" to="/" style="font-family: 'Dosis', sans-serif; font-size: 30px;">
+            <img src="../public/favicon-32x32.png" style="padding-right:10px;">
+            <div>{{ name }}</div>
+          </router-link>
+        </div>
+        <div class="navbar-burger burger" v-on:click="showNav = !showNav" v-bind:class="{ 'is-active' : showNav}">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="navbar-menu" v-on:click="showNav = false" v-bind:class="{ 'is-active' : showNav}">
+        <div class="navbar-start">
+          <router-link class="navbar-item" v-for="page in pages" v-bind:to="page.route">{{ page.name }}</router-link>
+        </div>
+      </div>
+    </nav>
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 </style>
+
+<script>
+  export default {
+    name: 'app',
+    data() {
+      return {
+        name: 'Cam Hardy',
+        pages: [
+          {name: 'Projects', route: '/projects'},
+          {name: 'Resume', route: '/resume'},
+          {name: 'About', route: '/about'}
+        ],
+        showNav: false
+      }
+    }
+  }
+</script>
